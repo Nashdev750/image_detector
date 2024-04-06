@@ -33,8 +33,9 @@ EOF
 - `sudo mkdir /etc/apt/keyrings`
 - `curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg`
 - `echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
+- `sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"`
 - `sudo apt-get update`
-- `sudo apt install -y kubelet=1.26.5-00 kubeadm=1.26.5-00 kubectl=1.26.5-00`
+- `sudo apt install kubeadm kubelet kubectl`
 ## install docker and containerd
  - `sudo apt install docker.io`
 - `sudo mkdir /etc/containerd`
