@@ -1,7 +1,7 @@
--`sudo swapoff -a`
--`sudo sed -i '/ swap / s/^/#/' /etc/fstab`
--`sudo hostnamectl set-hostname "master-node"`
--`exec bash`
+- `sudo swapoff -a`
+- `sudo sed -i '/ swap / s/^/#/' /etc/fstab`
+- `sudo hostnamectl set-hostname "master-node"`
+- `exec bash`
 
 ## set host names
 
