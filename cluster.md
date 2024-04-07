@@ -35,7 +35,7 @@ EOF
 - `echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list`
 - `sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"`
 - `sudo apt-get update`
-- `sudo apt install kubeadm kubelet kubectl`
+- `sudo apt-get install -y kubelet kubeadm kubectl`
 ## install docker and containerd
  - `sudo apt install docker.io`
 - `sudo mkdir /etc/containerd`
