@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: image_detector
+        image: nashdev750/image_detector:latest
         ports:
         - containerPort: 1024
         resources:
@@ -36,4 +36,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 1024
-  type: LoadBalancer
+  type: NodePort
