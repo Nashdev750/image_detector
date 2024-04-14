@@ -1,33 +1,38 @@
 from flask import Flask, request, jsonify
 import numpy as np
 import base64
-from imagedetector import ImageDetector
+from object_detection import ObjectDetector
 import io
 from PIL import Image
 
 app = Flask(__name__)
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/api/v1/object/detection', methods=['POST'])
 def upload():
-    data = request.json
+    try:
+        # validation
+        data = request.json
+        if 'id' not in data or 'image' not in data:
+            return jsonify({"error": "Both 'id' and 'image' are required."}), 400
 
-    # validation
-    if 'id' not in data or 'image' not in data:
-        return jsonify({"error": "Both 'id' and 'image' are required."}), 400
+        # Decode base64 image
+        encoded_image = data['image']
+        im_bytes = base64.b64decode(encoded_image)  
+        im_file = io.BytesIO(im_bytes)  
+        img = Image.open(im_file)
+        img = np.array(img)
+        objectDetector = ObjectDetector()
+        
+        objects = objectDetector.detectImage(img)
+        # Return detected objects
+        return jsonify({"id": data['id'], "objects": objects}), 200
+    except Exception as e:
+         return jsonify({"error": str(e)}), 500
 
-    # Decode base64 image
-    encoded_image = data['image']
-    im_bytes = base64.b64decode(encoded_image)  
-    im_file = io.BytesIO(im_bytes)  
-    img = Image.open(im_file)
-    img = np.array(img)
-    imageDetector = ImageDetector()
-    
-    objects = imageDetector.detectImage(img)
+   
 
-    # Return detected objects
-    return jsonify({"id": data['id'], "objects": objects}), 200
+
 
 if __name__ == '__main__':
-    app.run(port=1024, debug=True)
+    app.run(host="0.0.0.0",port=1024, debug=True)
