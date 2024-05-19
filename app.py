@@ -15,13 +15,13 @@ def test():
 def upload():
     try:
         # validation
-        data = request.json
-        if 'id' not in data or 'image' not in data:
-            return jsonify({"error": "Both 'id' and 'image' are required."}), 400
+        data = request
+        if 'image' not in data.files:
+            return jsonify({"error": "'image' is required."}), 400
 
         # Decode base64 image
-        encoded_image = data['image']
-        im_bytes = base64.b64decode(encoded_image)  
+        image_file = request.files['image']
+        im_bytes = image_file.read()
         im_file = io.BytesIO(im_bytes)  
         img = Image.open(im_file)
         img = np.array(img)
@@ -29,7 +29,7 @@ def upload():
         
         objects = objectDetector.detectImage(img)
         # Return detected objects
-        return jsonify({"id": data['id'], "objects": objects}), 200
+        return jsonify({"objects": objects}), 200
     except Exception as e:
          return jsonify({"error": str(e)}), 500
 
