@@ -8,7 +8,7 @@ from PIL import Image
 app = Flask(__name__)
 
 
-@app.route('/api/v1/object/detection', methods=['POST'])
+@app.route('/objects', methods=['POST'])
 def upload():
     try:
         # validation
