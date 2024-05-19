@@ -7,7 +7,10 @@ from PIL import Image
 
 app = Flask(__name__)
 
-
+@app.route('/test', methods=['get'])
+def test():
+    return jsonify({"id": "success"}), 200
+    
 @app.route('/objects', methods=['POST'])
 def upload():
     try:
